@@ -5,6 +5,7 @@ import { UsersService } from './users.service';
 import { User } from './users.entity';
 
 @Module({
+  //The typeOrm.feature() create a repository authomaticcaly
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
   providers: [UsersService],
