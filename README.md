@@ -1,4 +1,4 @@
-# CAR PRICING APP
+# USED CAR PRICING APP
 
 ## A functional project that was built along with ```Nest.JS``` with authentication using ```dependency injection``` for a used car pricing
 
