@@ -1,6 +1,6 @@
-# Car pricing api
+# CAR PRICING APP
 
-## A functional project that was built along with nestjs with authentication for a used car pricing
+## A functional project that was built along with ```nest.JS``` with authentication using ```dependency injection``` for a used car pricing
 
 - A user sign up with email and password
 - User get an estimate for how much their car is worth base on make/model/year/mileage
