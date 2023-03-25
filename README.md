@@ -8,7 +8,9 @@
 - Admin have to approve reported sales
 
 ### Requirements
-- Ensure you have ```Node.JS``` and ```Mongo DB``` install.
+- Ensure you have  ```Node.JS```  install.
+- Ensure you install the nest js cli ```npm install -g @nestjs/cli``` or  ```sudo npm install -g @nestjs/cli```
+- Ensure you download the ```SQLite``` from your vscode extension after you clone the project
 
 ### Getting started
 - clone the repository ```https://github.com/Collinsolayemi/nestjs-used-cars-pricing-api.git```
