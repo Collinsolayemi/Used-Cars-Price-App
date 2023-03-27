@@ -1,6 +1,6 @@
 # USED CAR PRICING APP
 
-## A ```Node.JS``` _functional project that was built along with_ ```Nest.JS``` _with authentication using_ ```dependency injection``` _for a used car pricing using_ ```SQLite``` _for the database_.
+## A ```Node.JS``` _functional project that was built along with_ ```Nest.JS``` _with authentication using_ ```dependency injection``` _for a used car pricing using_ ```SQLite```and ```PostgreSQL```  _for the database_.
 
 - A user sign up with email and password
 - User get an estimate for how much their car is worth base on make/model/year/mileage
