@@ -33,7 +33,6 @@ export class UsersController {
   @UseInterceptors(SerialiseInterceptor)
   @Get('/:id')
   async getUser(@Param('id') id: string) {
-    console.log('Handler is running right now');
     const user = await this.usersService.findOne(parseInt(id));
 
     //check if user does not exist

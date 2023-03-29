@@ -16,6 +16,13 @@ import { UserDto } from 'src/users/dtos/user.dto';
 // }
 export class SerialiseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    return next.handle().pipe(map((data: any) => {}));
+    return next.handle().pipe(
+      map((data: any) => {
+        return plainToClass(UserDto, data, {
+          // the below method makes everything work properly
+          excludeExtraneousValues: true,
+        });
+      }),
+    );
   }
 }
