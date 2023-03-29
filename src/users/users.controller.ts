@@ -15,6 +15,7 @@ import {
 import { CreateUserDto } from './dtos/create-user-dto';
 import { UserUpdateDto } from './dtos/update-user-dto';
 import { UsersService } from './users.service';
+import { SerialiseInterceptor } from 'src/interceptors/serialise.interceptor';
 
 @Controller('auth')
 export class UsersController {
@@ -29,9 +30,10 @@ export class UsersController {
     return this.usersService.find(email);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(SerialiseInterceptor)
   @Get('/:id')
   async getUser(@Param('id') id: string) {
+    console.log('Handler is running right now');
     const user = await this.usersService.findOne(parseInt(id));
 
     //check if user does not exist
