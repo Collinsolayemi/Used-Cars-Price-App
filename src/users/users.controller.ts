@@ -8,8 +8,6 @@ import {
   Patch,
   Delete,
   NotFoundException,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dtos/create-user-dto';
@@ -19,6 +17,7 @@ import { Serialise } from 'src/interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 
 @Controller('auth')
+@Serialise(UserDto) //custom interceptor
 export class UsersController {
   constructor(private usersService: UsersService) {}
   @Post('/signup')
@@ -31,8 +30,6 @@ export class UsersController {
     return this.usersService.find(email);
   }
 
-  //@UseInterceptors(new SerialiseInterceptor(UserDto))
-  @Serialise(UserDto) //custom interceptor
   @Get('/:id')
   async getUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(parseInt(id));
