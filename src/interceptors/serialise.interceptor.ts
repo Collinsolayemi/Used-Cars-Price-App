@@ -8,8 +8,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 
+//creating a class for type dto to be a class
+interface ClassConstructor {
+  new (...args: any[]): {};
+}
+
 //creating a custom interceptor
-export function Serialise(dto: any) {
+export function Serialise(dto: ClassConstructor) {
   return UseInterceptors(new SerialiseInterceptor(dto));
 }
 
