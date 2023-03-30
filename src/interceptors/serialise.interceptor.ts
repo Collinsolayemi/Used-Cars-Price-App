@@ -13,9 +13,6 @@ export function Serialise(dto: any) {
   return UseInterceptors(new SerialiseInterceptor(dto));
 }
 
-// export class SerialiseInterceptor implements NestInterceptor {
-//  intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
-
 //  }
 // }
 export class SerialiseInterceptor implements NestInterceptor {
