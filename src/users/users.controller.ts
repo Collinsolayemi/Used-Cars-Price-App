@@ -24,9 +24,17 @@ export class UsersController {
     private usersService: UsersService,
     private authService: AuthService,
   ) {}
+
+  //Signup routes
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
     this.authService.signUp(body.email, body.password);
+  }
+
+  //Signin route handler
+  @Post('/signin')
+  getUsers(@Body() body: CreateUserDto) {
+    return this.authService.signIn(body.email, body.password);
   }
 
   @Get()
