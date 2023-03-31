@@ -1,4 +1,4 @@
-# USED CAR PRICING APP
+# USED CAR PRICE APP
 
 ## A ```Node.JS``` _functional project that was built along with_ ```Nest.JS``` _with authentication using_ ```dependency injection``` _for a used car pricing using_ ```SQLite```and ```PostgreSQL```  _for the database_.
 
