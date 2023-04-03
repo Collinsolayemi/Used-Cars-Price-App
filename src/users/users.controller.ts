@@ -18,7 +18,7 @@ import { Serialise } from 'src/interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 
-@Controller('auth')
+@Controller('/auth')
 @Serialise(UserDto) //custom interceptor
 export class UsersController {
   constructor(
