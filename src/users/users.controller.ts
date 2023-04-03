@@ -34,12 +34,18 @@ export class UsersController {
     return user;
   }
 
+  //Get a current user
+  @Get('/whoami')
+  whoAmI(@Session() session: any) {
+    return this.usersService.findOne(session.userId);
+  }
+
   //Signin route handler
   @Post('/signin')
   async getUsers(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signIn(body.email, body.password);
-    console.log(user);
     session.userId = user.id;
+    return user;
   }
 
   @Get()
