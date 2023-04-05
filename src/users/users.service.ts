@@ -16,6 +16,9 @@ export class UsersService {
 
   //Get one user base on certain id
   findOne(id: number) {
+    if (!id) {
+      return null;
+    }
     return this.repo.findOne({ where: { id } });
   }
 

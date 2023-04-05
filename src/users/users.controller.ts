@@ -17,6 +17,7 @@ import { UsersService } from './users.service';
 import { Serialise } from 'src/interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user-decorator';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
@@ -34,10 +35,20 @@ export class UsersController {
     return user;
   }
 
-  //Get a current user
+  @Post('/signout')
+  signOut(@Session() session: any) {
+    session.userId = null;
+  }
+
+  // //Get a current user
+  // @Get('/whoami')
+  // whoAmI(@Session() session: any) {
+  //   return this.usersService.findOne(session.userId);
+  // }
+
   @Get('/whoami')
-  whoAmI(@Session() session: any) {
-    return this.usersService.findOne(session.userId);
+  whoAmI(@CurrentUser() user: string) {
+    return user;
   }
 
   //Signin route handler
