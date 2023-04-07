@@ -15,6 +15,7 @@ export class AuthService {
   async signUp(email: string, password: string) {
     //check if email is in use
     const users = await this.userService.find(email);
+
     if (users.length) {
       throw new BadRequestException('Email is in use');
     }
@@ -39,6 +40,8 @@ export class AuthService {
   //sign in user
   async signIn(email: string, password: string): Promise<CreateUserDto> {
     const [user] = await this.userService.find(email);
+
+    //Check if there is no user with input credentials
     if (!user) {
       throw new NotFoundException('User not found');
     }

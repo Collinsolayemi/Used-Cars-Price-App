@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class CurrentUserInterceptor implements NestInterceptor {
   constructor(private usersService: UsersService) {}
 
-  async intercept(context: ExecutionContext, next: CallHandler<any>) {
+  async intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const { userId } = request.session || {};
 

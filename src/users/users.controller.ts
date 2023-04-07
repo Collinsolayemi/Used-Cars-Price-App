@@ -9,7 +9,6 @@ import {
   Delete,
   NotFoundException,
   Session,
-  UseInterceptors,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dtos/create-user-dto';
@@ -19,12 +18,12 @@ import { Serialise } from 'src/interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user-decorator';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+//import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { User } from './users.entity';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
-@UseInterceptors(CurrentUserInterceptor)
+//@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -43,12 +42,6 @@ export class UsersController {
   signOut(@Session() session: any) {
     session.userId = null;
   }
-
-  // //Get a current user
-  // @Get('/whoami')
-  // whoAmI(@Session() session: any) {
-  //   return this.usersService.findOne(session.userId);
-  // }
 
   @Get('/whoami')
   whoAmI(@CurrentUser() user: User) {
