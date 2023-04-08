@@ -9,6 +9,7 @@ import {
   Delete,
   NotFoundException,
   Session,
+  UseGuards,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dtos/create-user-dto';
@@ -18,11 +19,13 @@ import { Serialise } from 'src/interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user-decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
 //import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { User } from './users.entity';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
+@UseGuards(AuthGuard)
 //@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
