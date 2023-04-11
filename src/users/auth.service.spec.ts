@@ -22,7 +22,7 @@ beforeEach(async () => {
     ],
   }).compile();
 
-  const service = module.get(AuthService);
+  service = module.get(AuthService);
 });
 
 it('can create an instance of auth service', async () => {
