@@ -2,13 +2,15 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
+import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let fakeUserService: Partial<UsersService>;
 
   beforeEach(async () => {
     //creating a fake user service
-    const fakeUserService: Partial<UsersService> = {
+    fakeUserService = {
       find: () => Promise.resolve([]),
       create: (email: string, password: string) =>
         Promise.resolve({ id: 1, email, password } as User),
@@ -37,5 +39,15 @@ describe('AuthService', () => {
     const [salt, hash] = user.password.split('.');
     expect(salt).toBeDefined();
     expect(hash).toBeDefined();
+  });
+
+  it('throws an error if user signs up with email that is in use', async () => {
+    fakeUserService.find = () =>
+      Promise.resolve([{ id: 1, email: 'a', password: '1' } as User]);
+    try {
+      await service.signUp('asdf@asdf.com', 'asdf');
+    } catch (err) {
+      console.log(err);
+    }
   });
 });
