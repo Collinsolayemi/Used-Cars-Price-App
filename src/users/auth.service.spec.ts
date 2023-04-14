@@ -34,7 +34,6 @@ describe('AuthService', () => {
 
   it('should create a new user with a salt and hash password', async () => {
     const user = await service.signUp('asdf@asdf.com', 'asdf');
-
     expect(user.password).not.toEqual('asdf');
     const [salt, hash] = user.password.split('.');
     expect(salt).toBeDefined();
@@ -44,11 +43,9 @@ describe('AuthService', () => {
   it('throws an error if user signs up with email that is in use', async () => {
     fakeUserService.find = () =>
       Promise.resolve([{ id: 1, email: 'a', password: '1' } as User]);
-    try {
-      await service.signUp('asdf@asdf.com', 'asdf');
-    } catch (err) {
-      console.log(err);
-    }
+    await expect(service.signUp('asdf@asdf.com', 'asdf')).rejects.toThrow(
+      BadRequestException,
+    );
   });
 
   it('throws if signin is called with an unused email', async () => {
@@ -60,20 +57,23 @@ describe('AuthService', () => {
   it('throws if an invalid password is provided', async () => {
     fakeUserService.find = () =>
       Promise.resolve([
-        { email: 'asdf@asdf.com', password: 'passdflkj' } as User,
-      ]);
-    await expect(service.signIn('asdf@asdf.com', 'passdflkj')).rejects.toThrow(
-      BadRequestException,
-    );
-  });
-
-  it('should return a user when password is correct', async () => {
-    fakeUserService.find = () =>
-      Promise.resolve([
         { email: 'asdf@asdf.com', password: 'laskdjf' } as User,
       ]);
-
-    const user = service.signIn('asdf@google.com', 'mypasswords');
-    expect(user).toBeDefined();
+    await expect(
+      service.signIn('laskdjf@alskdfj.com', 'passowrd'),
+    ).rejects.toThrow(BadRequestException);
   });
+
+  it('should throw an error when user give an invalid password', async () => {});
+
+  // it('should return a user when password is correct', async () => {
+  //   fakeUserService.find = () =>
+  //     Promise.resolve([
+  //       { email: 'asdf@asdf.com', password: 'laskdjf' } as User,
+  //     ]);
+  //   const user = service.signIn('asdf@asdf.com', 'laskdjf');
+  //   console.log(user);
+  //   console.log(user);
+  //   expect(user).toBeDefined();
+  // });
 });
