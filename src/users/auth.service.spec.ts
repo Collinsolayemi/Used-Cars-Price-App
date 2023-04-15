@@ -66,9 +66,9 @@ describe('AuthService', () => {
 
   it('throws if an invalid password is provided', async () => {
     await service.signUp('laskdjf@alskdfj.com', 'password');
-    await expect(
-      service.signIn('laskdjf@alskdfj.com', 'laksdlfkj'),
-    ).rejects.toThrow(BadRequestException);
+    await expect(service.signIn('laskdjf@alskdfj.com', 'asdf')).rejects.toThrow(
+      BadRequestException,
+    );
   });
 
   it('should return a user if the user password is correct', async () => {
