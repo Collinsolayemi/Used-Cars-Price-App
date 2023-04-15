@@ -48,6 +48,7 @@ export class AuthService {
 
     //compaare stored password with input password
     const [salt, storedHash] = user.password.split('.');
+    console.log(salt, 'space', storedHash);
 
     const hash = (await scrypt(password, salt, 32)) as Buffer;
 

@@ -64,16 +64,16 @@ describe('AuthService', () => {
     ).rejects.toThrow(BadRequestException);
   });
 
-  it('should throw an error when user give an invalid password', async () => {});
-
-  // it('should return a user when password is correct', async () => {
-  //   fakeUserService.find = () =>
-  //     Promise.resolve([
-  //       { email: 'asdf@asdf.com', password: 'laskdjf' } as User,
-  //     ]);
-  //   const user = service.signIn('asdf@asdf.com', 'laskdjf');
-  //   console.log(user);
-  //   console.log(user);
-  //   expect(user).toBeDefined();
-  // });
+  it('should return a user if the user password is correct', async () => {
+    fakeUserService.find = () =>
+      Promise.resolve([
+        {
+          email: 'asdf@asd.com',
+          password:
+            '5aec4390590619c5.91cb516cc1eff66b9f9e7ccc8a5b65a4305ce7e5c8736972b363384272ab4f62',
+        } as User,
+      ]);
+    const user = await service.signIn('asdf@asd.com', 'asdf');
+    expect(user).toBeDefined();
+  });
 });
