@@ -24,8 +24,8 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { User } from './users.entity';
 
 @Controller('/auth')
-@Serialise(UserDto) //custom interceptor
-@UseGuards(AuthGuard)
+//@Serialise(UserDto) //custom interceptor
+//@UseGuards(AuthGuard)
 //@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
