@@ -65,6 +65,4 @@ describe('UsersController', () => {
     const user = await controller.getUser('1');
     expect(user).toBeDefined();
   });
-
-  it('should throw an error if id given does not exist', async () => {});
 });
