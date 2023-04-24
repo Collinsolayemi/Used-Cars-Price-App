@@ -14,10 +14,10 @@ import { CurrentUserInterceptor } from './interceptors/current-user.interceptor'
   providers: [
     UsersService,
     AuthService,
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: CurrentUserInterceptor,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CurrentUserInterceptor,
+    },
   ],
 })
 export class UsersModule {}

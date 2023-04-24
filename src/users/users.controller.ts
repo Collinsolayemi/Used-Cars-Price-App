@@ -22,10 +22,13 @@ import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user-decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import { User } from './users.entity';
+import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+import { Request } from 'express';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
 @UseGuards(AuthGuard)
+//@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -37,6 +40,7 @@ export class UsersController {
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signUp(body.email, body.password);
     session.userId = user.id;
+
     return user;
   }
 
@@ -44,6 +48,11 @@ export class UsersController {
   signOut(@Session() session: any) {
     session.userId = null;
   }
+
+  // @Get('/whoami')
+  // whoAmI(@Req() user: Request) {
+  //   return user;
+  // }
 
   @Get('/whoami')
   whoAmI(@CurrentUser() user: User) {

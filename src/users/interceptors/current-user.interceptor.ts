@@ -5,7 +5,6 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { UsersService } from '../users.service';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
@@ -13,7 +12,7 @@ export class CurrentUserInterceptor implements NestInterceptor {
 
   async intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
-    const { userId } = request.session || {};
+    const { userId } = request.session;
 
     if (userId) {
       const user = await this.usersService.findOne(userId);
