@@ -27,8 +27,6 @@ import { Request } from 'express';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
-@UseGuards(AuthGuard)
-//@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -55,6 +53,7 @@ export class UsersController {
   // }
 
   @Get('/whoami')
+  @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: User) {
     return user;
   }
