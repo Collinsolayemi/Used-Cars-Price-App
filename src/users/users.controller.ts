@@ -22,8 +22,6 @@ import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user-decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import { User } from './users.entity';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
-import { Request } from 'express';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
