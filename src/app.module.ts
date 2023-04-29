@@ -8,7 +8,8 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { User } from './users/users.entity';
 import { Report } from './reports/report.entity';
-const cookieSession = require('cookie-session');
+//const cookieSession = require('cookie-session');
+import * as session from 'express-session';
 
 @Module({
   imports: [
@@ -53,8 +54,10 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
-        cookieSession({
-          keys: ['ashgfds'],
+        session({
+          secret: 'my-secret',
+          resave: false,
+          saveUninitialized: false,
         }),
       )
       .forRoutes('*');
