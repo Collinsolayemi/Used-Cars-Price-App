@@ -10,7 +10,8 @@ import {
   NotFoundException,
   Session,
   UseGuards,
-  UseInterceptors,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dtos/create-user-dto';
@@ -32,6 +33,7 @@ export class UsersController {
   ) {}
 
   //Signup routes
+  @HttpCode(HttpStatus.CREATED)
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signUp(body.email, body.password);
@@ -39,7 +41,7 @@ export class UsersController {
 
     return user;
   }
-
+  @HttpCode(HttpStatus.OK)
   @Post('/signout')
   signOut(@Session() session: any) {
     session.userId = null;
@@ -49,7 +51,7 @@ export class UsersController {
   // whoAmI(@Req() user: Request) {
   //   return user;
   // }
-
+  @HttpCode(HttpStatus.OK)
   @Get('/whoami')
   @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: User) {
@@ -58,6 +60,7 @@ export class UsersController {
   }
 
   //Signin route handler
+  @HttpCode(HttpStatus.OK)
   @Post('/signin')
   async getUsers(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signIn(body.email, body.password);
@@ -65,11 +68,13 @@ export class UsersController {
     return user;
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get()
   getAllUsers(@Query('email') email: string) {
     return this.usersService.find(email);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get('/:id')
   async getUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(parseInt(id));
@@ -80,12 +85,13 @@ export class UsersController {
     }
     return user;
   }
-
+  @HttpCode(HttpStatus.OK)
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() body: UserUpdateDto) {
     return this.usersService.update(parseInt(id), body);
   }
 
+  @HttpCode(204)
   @Delete('/:id')
   remove(@Param() id: string) {
     return this.usersService.remove(id);
