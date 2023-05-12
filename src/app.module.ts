@@ -36,7 +36,7 @@ import * as session from 'express-session';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 3306,
+      port: 3302,
       username: 'collins',
       password: 'password',
       database: 'car_app',
