@@ -8,10 +8,10 @@ import {
   Patch,
   Delete,
   NotFoundException,
-  Session,
   UseGuards,
   HttpCode,
   HttpStatus,
+  Req,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dtos/create-user-dto';
@@ -19,8 +19,8 @@ import { UserUpdateDto } from './dtos/update-user-dto';
 import { UsersService } from './users.service';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
-import { AuthService } from './auth.service';
-import { CurrentUser } from './decorators/current-user-decorator';
+import { AuthService } from '../auth/auth.service';
+//import { CurrentUser } from './decorators/current-user-decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import { User } from './users.entity';
 
@@ -35,38 +35,37 @@ export class UsersController {
   //Signup routes
   @HttpCode(HttpStatus.CREATED)
   @Post('/signup')
-  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signUp(body.email, body.password);
-    session.userId = user.id;
-
-    return user;
-  }
-  @HttpCode(HttpStatus.OK)
-  @Post('/signout')
-  signOut(@Session() session: any) {
-    session.userId = null;
-  }
-
-  // @Get('/whoami')
-  // whoAmI(@Req() user: Request) {
-  //   return user;
-  // }
-  @HttpCode(HttpStatus.OK)
-  @Get('/whoami')
-  @UseGuards(AuthGuard)
-  whoAmI(@CurrentUser() user: User) {
-    //console.log(user);
+  async createUser(@Body() body: CreateUserDto) {
+    const user = await this.authService.signUp(body);
     return user;
   }
 
   //Signin route handler
   @HttpCode(HttpStatus.OK)
   @Post('/signin')
-  async getUsers(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signIn(body.email, body.password);
-    session.userId = user.id;
+  async getUsers(@Body() body: CreateUserDto,) {
+    const user = await this.authService.signIn(body);
     return user;
   }
+
+  //signout routes
+  @HttpCode(HttpStatus.OK)
+  @Post('/signout')
+  signOut() {
+    // session.userId = null;
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('/whoami')
+  //@UseGuards(AuthGuard)
+  whoAmI(@Req() req: User) {
+    console.log(req);
+    return req;
+  }
+  // whoAmI(@CurrentUser() user: User) {
+  //   //console.log(user);
+  //   return user;
+  // }
 
   @HttpCode(HttpStatus.OK)
   @Get()

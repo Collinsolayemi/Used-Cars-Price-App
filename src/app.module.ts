@@ -8,7 +8,6 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { User } from './users/users.entity';
 import { Report } from './reports/report.entity';
-//const cookieSession = require('cookie-session');
 import * as session from 'express-session';
 
 @Module({
@@ -18,23 +17,33 @@ import * as session from 'express-session';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     //The typeOrm.forRoot() create the database
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          type: 'sqlite',
-          database: config.get<string>('DB_NAME'),
-          entities: [User, Report],
-          synchronize: true,
-        };
-      },
-    }),
-    // TypeOrmModule.forRoot({
-    //   type: 'sqlite',
-    //   database: process.env.NODE_ENV === 'test' ? 'test.sqlite' : 'db.sqlite',
-    //   entities: [User, Report],
-    //   synchronize: true,
+    // TypeOrmModule.forRootAsync({
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => {
+    //     return {
+    //       type: 'sqlite',
+    //       database: config.get<string>('DB_NAME'),
+    //       entities: [User, Report],
+    //       synchronize: true,
+    //       driver: {
+    //         name: 'sqlite3',
+    //         library: require('sqlite3'),
+    //       },
+    //     };
+    //   },
     // }),
+
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'collins',
+      password: 'password',
+      database: 'car_app',
+      entities: [User, Report],
+      synchronize: true,
+    }),
+
     UsersModule,
     ReportsModule,
   ],

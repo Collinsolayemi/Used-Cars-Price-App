@@ -6,6 +6,8 @@ import {
   Length,
 } from 'class-validator';
 
+import { Headers } from '@nestjs/common';
+
 export class CreateUserDto {
   @IsOptional()
   id?: number;
@@ -16,7 +18,8 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @IsString()
   @Length(3, 20, { message: 'password must be between 3 and 20 characters' })
   password: string;
+
+  
 }

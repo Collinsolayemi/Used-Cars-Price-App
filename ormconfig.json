@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3000,
+  "username": "root",
+  "password": "password",
+  "database": "car_app",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}
