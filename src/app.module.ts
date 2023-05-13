@@ -16,30 +16,13 @@ import * as session from 'express-session';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    //The typeOrm.forRoot() create the database
-    // TypeOrmModule.forRootAsync({
-    //   inject: [ConfigService],
-    //   useFactory: (config: ConfigService) => {
-    //     return {
-    //       type: 'sqlite',
-    //       database: config.get<string>('DB_NAME'),
-    //       entities: [User, Report],
-    //       synchronize: true,
-    //       driver: {
-    //         name: 'sqlite3',
-    //         library: require('sqlite3'),
-    //       },
-    //     };
-    //   },
-    // }),
-
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3302,
-      username: 'collins',
-      password: 'password',
-      database: 'car_app',
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'car-application',
       entities: [User, Report],
       synchronize: true,
     }),
