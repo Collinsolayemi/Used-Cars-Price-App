@@ -23,6 +23,7 @@ import { AuthService } from '../auth/auth.service';
 //import { CurrentUser } from './decorators/current-user-decorator';
 import { AuthGuard } from '../guards/auth.guard';
 import { User } from './users.entity';
+import session, { Session } from 'express-session';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
@@ -56,16 +57,9 @@ export class UsersController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Get('/whoami')
-  //@UseGuards(AuthGuard)
-  whoAmI(@Req() req: User) {
-    console.log(req);
-    return req;
-  }
-  // whoAmI(@CurrentUser() user: User) {
-  //   //console.log(user);
-  //   return user;
-  // }
+  @Post('/whoami')
+    whoami( ) {}
+  
 
   @HttpCode(HttpStatus.OK)
   @Get()
