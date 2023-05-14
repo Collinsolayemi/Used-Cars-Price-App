@@ -6,7 +6,6 @@ import {
   Length,
 } from 'class-validator';
 
-import { Headers } from '@nestjs/common';
 
 export class CreateUserDto {
   @IsOptional()
