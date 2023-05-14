@@ -12,11 +12,12 @@ export class AuthService {
   constructor(private userService: UsersService) {}
 
   //Sign up user
-  async signUp(createUserDto: CreateUserDto) {
+  async signUp(createUser: CreateUserDto) {
     //check if email is in use
-    const users = await this.userService.find(createUserDto.email);
-
-    if (users.length) {
+    const users = await this.userService.find(createUser.email);
+    
+    //check if user exists
+    if (users.length > 0) {
       throw new BadRequestException('Email is in use');
     }
 
@@ -25,13 +26,15 @@ export class AuthService {
     const salt = randomBytes(8).toString('hex');
 
     //hash password and salt together
-    const hash = (await scrypt(createUserDto.password, salt, 32)) as Buffer;
+    const hash = (await scrypt(createUser.password, salt, 32)) as Buffer;
 
     //join the hash and salt result together
     const result = salt + '.' + hash.toString('hex');
+    createUser.password = result
 
     //create a new user and save it
-    const user = await this.userService.create(createUserDto.email, result);
+    const user = await this.userService.create(createUser);
+    //const user = await this.userService.create(createUser.email,  result);
 
     //return the user
     return user;
