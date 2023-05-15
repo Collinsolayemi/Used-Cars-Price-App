@@ -2,7 +2,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dtos/create-user-dto';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 
-@Controller('auth')
+@Controller('/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 

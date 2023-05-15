@@ -9,6 +9,7 @@ import { ReportsModule } from './reports/reports.module';
 import { User } from './users/users.entity';
 import { Report } from './reports/report.entity';
 import * as session from 'express-session';
+import { AuthModule } from './auth/auth.modules';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import * as session from 'express-session';
 
     UsersModule,
     ReportsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
@@ -42,16 +44,4 @@ import * as session from 'express-session';
     },
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        session({
-          secret: 'my-secret',
-          resave: false,
-          saveUninitialized: false,
-        }),
-      )
-      .forRoutes('*');
-  }
-}
+export class AppModule {}

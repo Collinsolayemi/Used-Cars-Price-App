@@ -28,38 +28,19 @@ import session, { Session } from 'express-session';
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
 export class UsersController {
-  constructor(
-    private usersService: UsersService,
-   
-  ) {}
+  constructor(private usersService: UsersService) { }
+  
 
-  // //Signup routes
   // @HttpCode(HttpStatus.CREATED)
   // @Post('/signup')
   // async createUser(@Body() body: CreateUserDto) {
-  //   const user = await this.authService.signUp(body);
-  //   return user;
-  // }
-
-  // //Signin route handler
-  // @HttpCode(HttpStatus.OK)
-  // @Post('/signin')
-  // async getUsers(@Body() body: CreateUserDto,) {
-  //   const user = await this.authService.signIn(body);
-  //   return user;
-  // }
-
-  //signout routes
-  // @HttpCode(HttpStatus.OK)
-  // @Post('/signout')
-  // signOut() {
-  //   // session.userId = null;
+  //   //const user = await this.authService.signUp(body);
+  //   return 'signup successful'
   // }
 
   @HttpCode(HttpStatus.OK)
   @Post('/whoami')
-    whoami( ) {}
-  
+  whoami() {}
 
   @HttpCode(HttpStatus.OK)
   @Get()
