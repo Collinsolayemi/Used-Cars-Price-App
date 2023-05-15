@@ -12,10 +12,10 @@ export class AuthService {
   constructor(private userService: UsersService) {}
 
   //Sign up user
-  async signUp(createUser: CreateUserDto) {
+  async signUp(createUser: CreateUserDto): Promise<CreateUserDto> {
     //check if email is in use
     const users = await this.userService.find(createUser.email);
-    
+
     //check if user exists
     if (users.length > 0) {
       throw new BadRequestException('Email is in use');
@@ -30,7 +30,7 @@ export class AuthService {
 
     //join the hash and salt result together
     const result = salt + '.' + hash.toString('hex');
-    createUser.password = result
+    createUser.password = result;
 
     //create a new user and save it
     const user = await this.userService.create(createUser);
