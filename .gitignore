@@ -1,6 +1,6 @@
 .env.development
 .env.test
-/.env
+.env
 
 
 # compiled output
