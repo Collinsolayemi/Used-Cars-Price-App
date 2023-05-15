@@ -58,7 +58,6 @@ export class AuthService {
       //wrong credentials
       throw new BadRequestException('bad password');
     }
-
     return user;
   }
 }
