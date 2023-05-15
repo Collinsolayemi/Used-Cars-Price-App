@@ -10,6 +10,7 @@ import { User } from './users/users.entity';
 import { Report } from './reports/report.entity';
 import * as session from 'express-session';
 import { AuthModule } from './auth/auth.modules';
+import { JwtModule } from '@nestjs/jwt/dist/jwt.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { AuthModule } from './auth/auth.modules';
 
     UsersModule,
     ReportsModule,
-    AuthModule
+    AuthModule,
+    JwtModule
   ],
   controllers: [AppController],
   providers: [

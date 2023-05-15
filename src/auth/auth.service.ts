@@ -5,16 +5,23 @@ import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { CreateUserDto } from '../users/dtos/create-user-dto';
 import { User } from 'src/users/users.entity';
-
+import { JwtService } from '@nestjs/jwt/dist';
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService, private jwt: JwtService) {}
+
+  //creating a function for the token
+  async signToken(args: { id: number; email: string }) {
+    const payLoad = args;
+
+    return this.jwt.signAsync(payLoad, { secret: process.env.JWT_SECRET });
+  }
 
   //Sign up user
-  async signUp(createUser: CreateUserDto) : Promise<User>{
+  async signUp(createUser: CreateUserDto): Promise<User> {
     //check if email is in use
     const users = await this.userService.find(createUser.email);
 
@@ -43,9 +50,8 @@ export class AuthService {
   }
 
   //sign in user
-  async signIn(createUserDto: CreateUserDto): Promise<CreateUserDto> {
-
-    const { email, password} = createUserDto
+  async signIn(createUserDto: CreateUserDto) {
+    const { email, password } = createUserDto;
     const [user] = await this.userService.find(email);
 
     //Check if there is no user with input credentials
@@ -62,15 +68,12 @@ export class AuthService {
       //wrong credentials
       throw new BadRequestException('bad password');
     }
-    return user;
+
+    //Issue a jwt and send to the user
+    const token = await this.signToken({ id: user.id, email: user.email });
+    
+
+    return {user, token}
   }
 }
 
-// @Injectable()
-// export class AuthService {
-//   constructor(@InjectRepository(User) private repo: Repository<User>) {}
-
-//   signup(createUser: CreateUserDto) {
-//     return 'sign up';
-//   }
-// }
