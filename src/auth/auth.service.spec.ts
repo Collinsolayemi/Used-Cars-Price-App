@@ -46,7 +46,7 @@ describe('AuthService', () => {
 
   it('should create a new user with a salt and hash password', async () => {
     // const user = await service.signUp('asdf@asdf.com', 'asdf');
-      const user = await service.signUp('asdf@asdf.com', 'asdf');
+      const user = await service.signUp(createUser);
     expect(user.password).not.toEqual('asdf');
     const [salt, hash] = user.password.split('.');
     expect(salt).toBeDefined();

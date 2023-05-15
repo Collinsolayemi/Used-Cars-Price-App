@@ -44,7 +44,9 @@ export class AuthService {
 
   //sign in user
   async signIn(createUserDto: CreateUserDto): Promise<CreateUserDto> {
-    const [user] = await this.userService.find(createUserDto.email);
+
+    const { email, password} = createUserDto
+    const [user] = await this.userService.find(email);
 
     //Check if there is no user with input credentials
     if (!user) {
@@ -54,7 +56,7 @@ export class AuthService {
     //compaare stored password with input password
     const [salt, storedHash] = user.password.split('.');
 
-    const hash = (await scrypt(createUserDto.password, salt, 32)) as Buffer;
+    const hash = (await scrypt(password, salt, 32)) as Buffer;
 
     if (storedHash !== hash.toString('hex')) {
       //wrong credentials
