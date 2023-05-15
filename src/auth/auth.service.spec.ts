@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/users.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { CreateUserDto } from 'src/users/dtos/create-user-dto';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -16,11 +17,11 @@ describe('AuthService', () => {
         const filterUser = users.filter((user) => user.email === email);
         return Promise.resolve(filterUser);
       },
-      create: (email: string, password: string) => {
+      create: (createUser: CreateUserDto) => {
         const user = {
           id: Math.floor(Math.random() * 9999),
-          email,
-          password,
+          email: createUser.email,
+          password: createUser.password,
         } as User;
         users.push(user);
         return Promise.resolve(user);
@@ -44,7 +45,8 @@ describe('AuthService', () => {
   });
 
   it('should create a new user with a salt and hash password', async () => {
-    const user = await service.signUp('asdf@asdf.com', 'asdf');
+    // const user = await service.signUp('asdf@asdf.com', 'asdf');
+      const user = await service.signUp('asdf@asdf.com', 'asdf');
     expect(user.password).not.toEqual('asdf');
     const [salt, hash] = user.password.split('.');
     expect(salt).toBeDefined();

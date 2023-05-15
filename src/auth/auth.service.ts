@@ -4,9 +4,8 @@ import { UsersService } from '../users/users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { CreateUserDto } from '../users/dtos/create-user-dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { User } from 'src/users/users.entity';
+
 
 const scrypt = promisify(_scrypt);
 
@@ -15,7 +14,7 @@ export class AuthService {
   constructor(private userService: UsersService) {}
 
   //Sign up user
-  async signUp(createUser: CreateUserDto): Promise<CreateUserDto> {
+  async signUp(createUser: CreateUserDto) : Promise<User>{
     //check if email is in use
     const users = await this.userService.find(createUser.email);
 
