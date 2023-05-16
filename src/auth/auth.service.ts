@@ -17,7 +17,7 @@ export class AuthService {
   async signToken(args: { id: number; email: string }) {
     const payLoad = args;
 
-    return this.jwt.signAsync(payLoad, { secret: process.env.JWT_SECRET });
+    return this.jwt.signAsync(payLoad, { secret: 'jwtsecret' });
   }
 
   //Sign up user
@@ -71,9 +71,7 @@ export class AuthService {
 
     //Issue a jwt and send to the user
     const token = await this.signToken({ id: user.id, email: user.email });
-    
 
-    return {user, token}
+    return { token };
   }
 }
-
