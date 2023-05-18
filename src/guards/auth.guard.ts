@@ -6,18 +6,6 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    return !!request.user
+    return request.user;
   }
 }
-
-
-// export class AuthGuard implements CanActivate {
-//   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-//     const request = context.switchToHttp().getRequest();
-//     request.locals = {
-//       ...request.locals,
-//       user: request.user,
-//     };
-//     return true;
-//   }
-// }

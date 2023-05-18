@@ -11,30 +11,32 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
-  Req,
+  Request,
 } from '@nestjs/common';
 
-import { CreateUserDto } from './dtos/create-user-dto';
 import { UserUpdateDto } from './dtos/update-user-dto';
 import { UsersService } from './users.service';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
-import { CurrentUser } from './decorators/current-user-decorator';
-import { AuthGuard } from '../guards/auth.guard';
-import { AuthService } from 'src/auth/auth.service';
-import { JwtService } from '@nestjs/jwt/dist';
+//import { AuthGuard } from '../guards/auth.guard';
+import { getUserFromToken } from './decorators/current-user-decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
 export class UsersController {
-  constructor(private usersService: UsersService, private jwt: JwtService) {}
+  constructor(private usersService: UsersService) {}
 
   //To get the currently signed in user
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.OK)
   @Get('/whoami')
-  //@UseGuards(new AuthGuard())
-  async whoami(@CurrentUser() user: any) {
-    return user
+  //@UseGuards(AuthGuard('jwt'))
+  async whoami(@Request() req) {
+    const token = req.headers.authorization.split(' ')[1];
+    const user = await getUserFromToken(token);
+    req.user = user;
+    return req.user;
   }
 
   @HttpCode(HttpStatus.OK)
@@ -66,4 +68,3 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 }
-
