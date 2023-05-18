@@ -19,28 +19,23 @@ import { UserUpdateDto } from './dtos/update-user-dto';
 import { UsersService } from './users.service';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
-import { AuthService } from '../auth/auth.service';
-//import { CurrentUser } from './decorators/current-user-decorator';
+import { CurrentUser } from './decorators/current-user-decorator';
 import { AuthGuard } from '../guards/auth.guard';
-import { User } from './users.entity';
-import session, { Session } from 'express-session';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtService } from '@nestjs/jwt/dist';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
 export class UsersController {
-  constructor(private usersService: UsersService) { }
-  
+  constructor(private usersService: UsersService, private jwt: JwtService) {}
 
-  // @HttpCode(HttpStatus.CREATED)
-  // @Post('/signup')
-  // async createUser(@Body() body: CreateUserDto) {
-  //   //const user = await this.authService.signUp(body);
-  //   return 'signup successful'
-  // }
-
+  //To get the currently signed in user
   @HttpCode(HttpStatus.OK)
-  @Post('/whoami')
-  whoami() {}
+  @Get('/whoami')
+  //@UseGuards(new AuthGuard())
+  async whoami(@CurrentUser() user: any) {
+    return user
+  }
 
   @HttpCode(HttpStatus.OK)
   @Get()
@@ -71,3 +66,4 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 }
+

@@ -1,21 +1,24 @@
-// import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-
-
-// export const CurrentUser = createParamDecorator(
-//   (data: never, context: ExecutionContext) => {
-//     const request = context.switchToHttp().getRequest();
-//     return request.session.userId;
-//   },
-// );
-
-
-// current-user.decorator.ts
+// current-user.decorator
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import * as jwt from 'jsonwebtoken';
 
+export async function  getUserFromToken(token: string): Promise<any> {
+  try {
+    const decodedToken = await jwt.verify(token, 'jwtsecret');
+    return decodedToken;
+  } catch (error) {
+    // Token verification failed or expired
+    return null;
+  }
+}
 
 export const CurrentUser = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
-    return request.user; // Assuming the user object is attached to the request object during authentication
+  (data: never, context: ExecutionContext) => {
+    const request = context.switchToHttp().getRequest();
+    const token = request.rawHeaders[1].toString().split(' ')[1];
+    const user = getUserFromToken(token);
+    request.user = user;
+
+    return request.user;
   },
 );

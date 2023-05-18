@@ -71,7 +71,8 @@ export class AuthService {
 
     //Issue a jwt and send to the user
     const token = await this.signToken({ id: user.id, email: user.email });
-
-    return { token };
+    //Excluding the password field from the response body
+    const { password: pass, ...others } = user;
+    return { token, ...others };
   }
 }
