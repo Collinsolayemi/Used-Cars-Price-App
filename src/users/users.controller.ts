@@ -18,9 +18,8 @@ import { UserUpdateDto } from './dtos/update-user-dto';
 import { UsersService } from './users.service';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
-//import { AuthGuard } from '../guards/auth.guard';
 import { getUserFromToken } from './decorators/current-user-decorator';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
@@ -28,10 +27,9 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   //To get the currently signed in user
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(new AuthGuard())
   @HttpCode(HttpStatus.OK)
   @Get('/whoami')
-  //@UseGuards(AuthGuard('jwt'))
   async whoami(@Request() req) {
     const token = req.headers.authorization.split(' ')[1];
     const user = await getUserFromToken(token);
