@@ -11,7 +11,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
-  Request,
+  Req,
 } from '@nestjs/common';
 
 import { UserUpdateDto } from './dtos/update-user-dto';
@@ -20,6 +20,9 @@ import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { getUserFromToken } from './decorators/current-user-decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { CurrentUser } from './decorators/current-user-decorator';
+import { Request } from 'express';
+import { request } from 'http';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
@@ -27,14 +30,23 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   //To get the currently signed in user
-  @UseGuards(new AuthGuard())
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  @Get('/whoami')
-  async whoami(@Request() req) {
+  @Get('/my-profile')
+  async myProfile(@Req() req: Request) {
     const token = req.headers.authorization.split(' ')[1];
     const user = await getUserFromToken(token);
-    req.user = user;
-    return req.user;
+    return user;
+  }
+
+  @UseGuards(AuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post('/signout')
+  // async signOut(@CurrentUser() user) {
+  async signOut(@Req() request) {
+    let token = request.headers.authorization.split(' ')[1];
+    token === null;
+    return 'null'
   }
 
   @HttpCode(HttpStatus.OK)

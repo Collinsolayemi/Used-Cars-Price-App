@@ -1,6 +1,6 @@
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dtos/create-user-dto';
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 
@@ -25,9 +25,11 @@ export class AuthController {
   }
 
   //signout route hnadler
-  @HttpCode(HttpStatus.OK)
-  @Post('/signout')
-  signOut() {
-    // session.userId = null;
-  }
+//   @HttpCode(HttpStatus.OK)
+//   @Post('/signout')
+//  async signOut(@Request() req) {
+//     const user = await this.authService.signOut()
+//     console.log(req)
+//     // session.userId = null;
+//   }
 }
