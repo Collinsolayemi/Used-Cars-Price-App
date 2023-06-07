@@ -6,7 +6,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('/auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   //Signup routes
   @HttpCode(HttpStatus.CREATED)
@@ -23,13 +23,4 @@ export class AuthController {
     const newUser = await this.authService.signIn(body);
     return newUser;
   }
-
-  //signout route hnadler
-//   @HttpCode(HttpStatus.OK)
-//   @Post('/signout')
-//  async signOut(@Request() req) {
-//     const user = await this.authService.signOut()
-//     console.log(req)
-//     // session.userId = null;
-//   }
 }

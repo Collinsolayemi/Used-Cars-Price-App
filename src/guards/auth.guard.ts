@@ -1,18 +1,14 @@
 import {
-  CanActivate,
-  ExecutionContext,
   Injectable,
   UnauthorizedException,
+  CanActivate,
+  ExecutionContext,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/auth/auth.service';
+import { verify, JwtPayload } from 'jsonwebtoken';
 
-
-
-
- @Injectable()
+@Injectable()
 export class AuthGuard implements CanActivate {
-  //constructor(private readonly auth: AuthService) {}
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -24,13 +20,16 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Unauthorized');
     }
 
-    //authentication logic here
-    // const isValidToken = this.auth.validateToken(token);
+    try {
+      // Verify and decode the token
+      const decodedToken = verify(token, process.env.JWT) as JwtPayload;
 
-    // if (!isValidToken) {
-    //   throw new UnauthorizedException('Invalid token');
-    // }
+      // Attach the decoded token to the request object for later use
+      request.user = decodedToken;
 
-    return false;
+      return true;
+    } catch (error) {
+      throw new UnauthorizedException('Unauthorized');
+    }
   }
 }

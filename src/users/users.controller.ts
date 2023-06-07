@@ -18,11 +18,7 @@ import { UserUpdateDto } from './dtos/update-user-dto';
 import { UsersService } from './users.service';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
-import { getUserFromToken } from './decorators/current-user-decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { CurrentUser } from './decorators/current-user-decorator';
-import { Request } from 'express';
-import { request } from 'http';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
@@ -32,22 +28,13 @@ export class UsersController {
   //To get the currently signed in user
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
-  @Get('/my-profile')
-  async myProfile(@Req() req: Request) {
-    const token = req.headers.authorization.split(' ')[1];
-    const user = await getUserFromToken(token);
-    return user;
+  @Get('my-profile')
+  async myProfile(@Req() req) {
+    // const token = req.headers.authorization.split(' ')[1];
+    // const user = await getUserFromToken(token);
+    return req.user;
   }
 
-  @UseGuards(AuthGuard)
-  @HttpCode(HttpStatus.OK)
-  @Post('/signout')
-  // async signOut(@CurrentUser() user) {
-  async signOut(@Req() request) {
-    let token = request.headers.authorization.split(' ')[1];
-    token === null;
-    return 'null'
-  }
 
   @HttpCode(HttpStatus.OK)
   @Get()
