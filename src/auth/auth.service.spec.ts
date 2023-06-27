@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/users.entity';
+import { User } from '../users/entiites/users.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/auth.dto';
 

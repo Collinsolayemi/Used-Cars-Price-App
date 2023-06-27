@@ -6,11 +6,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
-import { User } from './users/users.entity';
-import { Report } from './reports/report.entity';
+import { User } from './users/entiites/users.entity';
+import { Report } from './users/entiites/report.entity';
 import { AuthModule } from './auth/auth.modules';
 import { JwtModule } from '@nestjs/jwt/dist/jwt.module';
-
 
 @Module({
   imports: [
@@ -32,7 +31,7 @@ import { JwtModule } from '@nestjs/jwt/dist/jwt.module';
     UsersModule,
     ReportsModule,
     AuthModule,
-    JwtModule
+    JwtModule,
   ],
   controllers: [AppController],
   providers: [

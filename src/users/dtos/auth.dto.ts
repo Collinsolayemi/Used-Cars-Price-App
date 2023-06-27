@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Length,
@@ -29,5 +30,6 @@ export class SigninDto {
 }
 
 export class UpdateDto {
-  
+  @IsNumber()
+  id: number;
 }

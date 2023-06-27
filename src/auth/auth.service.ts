@@ -4,7 +4,7 @@ import { UsersService } from '../users/users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { SignUpDto, SigninDto } from '../users/dtos/auth.dto';
-import { User } from 'src/users/users.entity';
+import { User } from 'src/users/entiites/users.entity';
 import { JwtService } from '@nestjs/jwt/dist';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
