@@ -6,8 +6,7 @@ import {
   Length,
 } from 'class-validator';
 
-
-export class CreateUserDto {
+export class SignUpDto {
   @IsOptional()
   id?: number;
 
@@ -19,6 +18,16 @@ export class CreateUserDto {
   @IsString()
   @Length(3, 20, { message: 'password must be between 3 and 20 characters' })
   password: string;
+}
 
+export class SigninDto {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  password: string;
+}
+
+export class UpdateDto {
   
 }

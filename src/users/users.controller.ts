@@ -14,11 +14,12 @@ import {
   Req,
 } from '@nestjs/common';
 
-import { UserUpdateDto } from './dtos/update-user-dto';
+
 import { UsersService } from './users.service';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { UpdateDto } from './dtos/auth.dto';
 
 @Controller('/auth')
 @Serialise(UserDto) //custom interceptor
@@ -55,7 +56,7 @@ export class UsersController {
   }
   @HttpCode(HttpStatus.OK)
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() body: UserUpdateDto) {
+  updateUser(@Param('id') id: string, @Body() body: UpdateDto) {
     return this.usersService.update(parseInt(id), body);
   }
 

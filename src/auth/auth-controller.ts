@@ -1,17 +1,24 @@
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/users/dtos/create-user-dto';
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards, Request } from '@nestjs/common';
+import { SignUpDto, SigninDto } from 'src/users/dtos/auth.dto';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
-
 
 @Controller('/auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   //Signup routes
   @HttpCode(HttpStatus.CREATED)
   @Post('/signup')
-  async createUser(@Body() body: CreateUserDto) {
+  async createUser(@Body() body: SignUpDto) {
     const user = await this.authService.signUp(body);
     return user;
   }
@@ -19,7 +26,7 @@ export class AuthController {
   //Signin route handler
   @HttpCode(HttpStatus.OK)
   @Post('/signin')
-  async getUsers(@Body() body: CreateUserDto) {
+  async getUsers(@Body() body: SigninDto) {
     const newUser = await this.authService.signIn(body);
     return newUser;
   }

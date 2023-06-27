@@ -6,7 +6,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { CreateReportDto } from './dtos/create-report-dto';
+import { CreateReportDto } from '../users/dtos/reports.dto';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from 'src/guards/auth.guard';
 
@@ -20,7 +20,4 @@ export class ReportsController {
   createReport(@Body() body: CreateReportDto) {
     return this.reportsService.create(body);
   }
-
-  
 }
-
