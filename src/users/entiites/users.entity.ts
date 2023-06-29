@@ -5,7 +5,7 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 //import { Exclude } from 'class-transformer';
 import { Report } from './report.entity';
@@ -23,7 +23,7 @@ export class User {
   password: string;
 
   @OneToMany(() => Report, (report) => report.user)
-    report: Report[]
+  reports: Report[];
 
   @AfterInsert()
   logInsert() {

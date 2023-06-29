@@ -29,6 +29,6 @@ export class Report {
   mileage: number;
 
 
-  @ManyToOne(()=> User, (user)=> user.report)
+  @ManyToOne(()=> User, (user)=> user.reports)
   user: User
 }

@@ -31,8 +31,6 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @Get('my-profile')
   async myProfile(@Req() req) {
-    // const token = req.headers.authorization.split(' ')[1];
-    // const user = await getUserFromToken(token);
     return req.user;
   }
 
